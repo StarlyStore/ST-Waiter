@@ -1,4 +1,4 @@
-package net.starly.waiter.data;
+package net.starly.waiter.manager;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +12,11 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WaitingDataManager {
-    private static WaitingDataManager instance;
+public class WaitingManager {
+    private static WaitingManager instance;
 
-    public static WaitingDataManager getInstance() {
-        if (instance == null) instance = new WaitingDataManager();
+    public static WaitingManager getInstance() {
+        if (instance == null) instance = new WaitingManager();
         return instance;
     }
 
