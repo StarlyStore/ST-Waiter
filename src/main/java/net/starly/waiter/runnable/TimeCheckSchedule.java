@@ -1,7 +1,7 @@
 package net.starly.waiter.runnable;
 
 import net.starly.waiter.WaiterMain;
-import net.starly.waiter.data.WaitingDataManager;
+import net.starly.waiter.manager.WaitingManager;
 import net.starly.waiter.util.WaitingUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,7 +24,7 @@ public class TimeCheckSchedule extends BukkitRunnable {
 
     @Override
     public void run() {
-        WaitingDataManager waitingManager = WaitingDataManager.getInstance();
+        WaitingManager waitingManager = WaitingManager.getInstance();
         if (!WaitingUtil.isFull()) return;
 
         if (waitingManager.getLength() <= 0) return;
