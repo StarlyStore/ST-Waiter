@@ -7,6 +7,7 @@ import net.starly.core.data.Time;
 import net.starly.waiter.WaiterMain;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -50,5 +51,10 @@ public class WaitingManager {
 
     public int getLength() {
         return list.size();
+    }
+
+    public boolean isFull() {
+        JavaPlugin plugin = WaiterMain.getInstance();
+        return plugin.getServer().getOnlinePlayers().size() >= plugin.getConfig().getInt("maxPlayer");
     }
 }
