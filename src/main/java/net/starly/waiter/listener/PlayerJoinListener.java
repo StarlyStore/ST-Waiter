@@ -33,7 +33,9 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (waitingManager.get(address) != 0 || !waitingManager.isCanJoin()) { // 접속 가능여부 확인
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, ChatColor.translateAlternateColorCodes('&', config.getString("kickMessageWaiting")));
+            String message = ChatColor.translateAlternateColorCodes('&', config.getString("kickMessageWaiting"));
+            message = message.replaceAll("%remainPlayer%",waitingManager.get(address) + "");
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, message);
             return;
         }
 

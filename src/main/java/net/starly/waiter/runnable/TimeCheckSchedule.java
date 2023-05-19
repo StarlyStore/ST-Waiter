@@ -24,7 +24,7 @@ public class TimeCheckSchedule extends BukkitRunnable {
     @Override
     public void run() {
         WaitingManager waitingManager = WaitingManager.getInstance();
-        if (!waitingManager.isFull()) return;
+        if (waitingManager.isFull()) return;
 
         if (waitingManager.getLength() <= 0) return;
 
