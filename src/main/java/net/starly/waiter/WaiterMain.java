@@ -2,11 +2,13 @@ package net.starly.waiter;
 
 import lombok.Getter;
 import net.starly.core.bstats.Metrics;
+import net.starly.waiter.listener.PlayerJoinListener;
+import net.starly.waiter.listener.ServerListPingListener;
 import net.starly.waiter.runnable.TimeCheckSchedule;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class WaiterMain extends JavaPlugin  {
+public final class WaiterMain extends JavaPlugin {
 
     @Getter
     private static JavaPlugin instance;
@@ -44,7 +46,8 @@ public final class WaiterMain extends JavaPlugin  {
 
         /* LISTENER
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        // TODO: 수정
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new ServerListPingListener(), this);
     }
 
     private boolean isPluginEnabled(String name) {
