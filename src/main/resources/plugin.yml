@@ -1,0 +1,12 @@
+name: ST-Waiter
+main: net.starly.waiter.WaiterMain
+author: Starly Team
+website: http://starly.kr/
+
+description: Waiter Plugin.
+
+softdepend:
+  - ST-Core
+
+version: 1.0
+api-version: 1.13

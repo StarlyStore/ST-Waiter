@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+group = 'net.starly'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "http://starly.kr:8083/repository/maven-public/"
+        allowInsecureProtocol = true
+    }
+}
+
+dependencies {
+    //JAVA DEPENDENCIES
+    compileOnly "org.jetbrains:annotations:23.0.0"
+    compileOnly "org.projectlombok:lombok:1.18.24"
+    annotationProcessor "org.projectlombok:lombok:1.18.24"
+
+    //BUKKIT DEPENDENCIES
+    compileOnly "org.spigotmc:spigot-api:R0.1:1.12.2"
+
+    // OTHER DEPENDENCIES
+    compileOnly "net.starly.core:ST-Core:1.7.8"
+}
+
+
+def targetJavaVersion = 8
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
