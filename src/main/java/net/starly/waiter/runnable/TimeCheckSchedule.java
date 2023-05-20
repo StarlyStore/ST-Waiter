@@ -9,8 +9,6 @@ public class TimeCheckSchedule extends BukkitRunnable {
 
     private static TimeCheckSchedule instance;
 
-    private final JavaPlugin plugin = WaiterMain.getInstance();
-
     public static void start() {
         instance = new TimeCheckSchedule();
         instance.runTaskTimer(WaiterMain.getInstance(), 0L, 20L);

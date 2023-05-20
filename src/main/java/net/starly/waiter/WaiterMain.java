@@ -54,4 +54,9 @@ public final class WaiterMain extends JavaPlugin {
         Plugin plugin = getServer().getPluginManager().getPlugin(name);
         return plugin != null && plugin.isEnabled();
     }
+
+    @Override
+    public void onDisable() {
+        TimeCheckSchedule.stop();
+    }
 }

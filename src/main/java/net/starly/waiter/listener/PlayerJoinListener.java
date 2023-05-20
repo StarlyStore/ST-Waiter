@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import util.MessageUtil;
 
 import java.net.InetAddress;
 
@@ -23,7 +24,7 @@ public class PlayerJoinListener implements Listener {
 
         if (!waitingManager.has(address)) {
             waitingManager.add(address, event.getPlayer().getUniqueId());
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, ChatColor.translateAlternateColorCodes('&', config.getString("kickMessage")));
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessage"),address));
             return;
         }
 
@@ -33,9 +34,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (waitingManager.get(address) != 0 || !waitingManager.isCanJoin()) { // 접속 가능여부 확인
-            String message = ChatColor.translateAlternateColorCodes('&', config.getString("kickMessageWaiting"));
-            message = message.replaceAll("%remainPlayer%",waitingManager.get(address) + "");
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, message);
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessage"),address));
             return;
         }
 
