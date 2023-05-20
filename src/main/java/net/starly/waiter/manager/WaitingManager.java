@@ -39,6 +39,7 @@ public class WaitingManager {
     }
 
     public void add(InetAddress inetAddress, UUID uuid) {
+        if (waitingList.contains(inetAddress)) return;
         waitingList.add(inetAddress);
         inetAddressMap.put(inetAddress, uuid);
     }

@@ -3,8 +3,10 @@ package net.starly.waiter;
 import lombok.Getter;
 import net.starly.core.bstats.Metrics;
 import net.starly.waiter.listener.PlayerJoinListener;
+import net.starly.waiter.listener.PlayerKickListener;
 import net.starly.waiter.listener.ServerListPingListener;
 import net.starly.waiter.runnable.TimeCheckSchedule;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,6 +50,7 @@ public final class WaiterMain extends JavaPlugin {
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ServerListPingListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerKickListener(), this);
     }
 
     private boolean isPluginEnabled(String name) {
@@ -58,5 +61,6 @@ public final class WaiterMain extends JavaPlugin {
     @Override
     public void onDisable() {
         TimeCheckSchedule.stop();
+        HandlerList.unregisterAll(this); // 이벤트 중복 방지
     }
 }
