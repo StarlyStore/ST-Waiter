@@ -24,7 +24,11 @@ public class WaitingManager {
     }
 
     private final FileConfiguration configuration = WaiterMain.getInstance().getConfig();
+
+    @Getter
     private final List<InetAddress> waitingList = new ArrayList<>();
+
+    @Getter
     private final HashMap<InetAddress, UUID> inetAddressMap = new HashMap<>();
 
     @Getter
@@ -54,6 +58,15 @@ public class WaitingManager {
         waitingList.remove(waitingList.get(0));
         remainTime.setSeconds(configuration.getInt("enterTime"));
         canJoin = false;
+    }
+
+    public InetAddress getInetAddress(UUID uuid) {
+        for (InetAddress address : inetAddressMap.keySet()) {
+            if (inetAddressMap.get(address).equals(uuid)) {
+                return address;
+            }
+        }
+        return null;
     }
 
     public int getLength() {

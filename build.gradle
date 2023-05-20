@@ -30,3 +30,7 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+
+jar {
+    destinationDirectory.set(file('C:\\Users\\mypc\\Pictures\\마크 서버\\1.16.5\\plugins'))
+}

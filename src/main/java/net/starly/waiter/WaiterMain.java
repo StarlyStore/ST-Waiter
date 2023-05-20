@@ -2,6 +2,9 @@ package net.starly.waiter;
 
 import lombok.Getter;
 import net.starly.core.bstats.Metrics;
+import net.starly.waiter.command.WaiterCommand;
+import net.starly.waiter.command.tabCompleter.WaiterTabCompleter;
+import net.starly.waiter.listener.InventoryClickListener;
 import net.starly.waiter.listener.PlayerJoinListener;
 import net.starly.waiter.listener.ServerListPingListener;
 import net.starly.waiter.runnable.TimeCheckSchedule;
@@ -43,12 +46,14 @@ public final class WaiterMain extends JavaPlugin {
 
         /* COMMAND
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        // TODO: 수정
+        getCommand("대기열").setExecutor(new WaiterCommand());
+        getCommand("대기열").setTabCompleter(new WaiterTabCompleter());
 
         /* LISTENER
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ServerListPingListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
     }
 
     private boolean isPluginEnabled(String name) {

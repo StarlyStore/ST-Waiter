@@ -23,21 +23,23 @@ public class PlayerJoinListener implements Listener {
         if (waitingManager.getLength() <= 0 && plugin.getServer().getOnlinePlayers().size() < plugin.getConfig().getInt("maxPlayer"))
             return;
 
+        if (event.getPlayer().isBanned()) return;
+
         InetAddress address = event.getAddress();
 
         if (!waitingManager.has(address)) {
             waitingManager.add(address, event.getPlayer().getUniqueId());
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessage"), address));
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("errorMessage.kickMessage"), address));
             return;
         }
 
         if (!waitingManager.validate(address, event.getPlayer().getUniqueId())) { // UUID 대조
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "대기열에 등록된 UUID 와 달라 접속이 거부되었습니다.");
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, MessageUtil.format(config.getString("errorMessage.wrongUUID"),address));
             return;
         }
 
         if (waitingManager.get(address) != 0 || !waitingManager.isCanJoin()) { // 접속 가능여부 확인
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessageWaiting"), address));
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("errorMessage.kickMessageWaiting"), address));
             return;
         }
 
