@@ -20,8 +20,8 @@ public class PlayerJoinListener implements Listener {
         WaitingManager waitingManager = WaitingManager.getInstance();
         FileConfiguration config = WaiterMain.getInstance().getConfig();
         JavaPlugin plugin = WaiterMain.getInstance();
-        if (plugin.getServer().getOnlinePlayers().size() < plugin.getConfig().getInt("maxPlayer"))
-            return; // 정원이 가득 찼는지 확인
+        if (waitingManager.getLength() <= 0 && plugin.getServer().getOnlinePlayers().size() < plugin.getConfig().getInt("maxPlayer"))
+            return;
 
         InetAddress address = event.getAddress();
 
@@ -42,6 +42,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         waitingManager.next(); // 접속 성공 시 대기열 넘기기
+        System.out.println("next");
 
     }
 }
