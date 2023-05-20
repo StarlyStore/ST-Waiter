@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
+import util.MessageUtil;
 
 import java.net.InetAddress;
 
@@ -17,20 +18,16 @@ public class ServerListPingListener implements Listener {
         FileConfiguration config = WaiterMain.getInstance().getConfig();
         InetAddress address = event.getAddress();
 
+        event.setMaxPlayers(config.getInt("maxPlayer"));
+
         if (!waitingManager.has(address)) return;
 
-        String formattedMessage;
-        if (waitingManager.get(address) == 0) {
-            if (waitingManager.isCanJoin()) {
-                formattedMessage = ChatColor.translateAlternateColorCodes('&', config.getString("enterMOTD"));
-                formattedMessage = formattedMessage.replaceAll("%remainTime%", waitingManager.getRemainTime().getSeconds() + "");
-            } else {
-                formattedMessage = ChatColor.translateAlternateColorCodes('&', config.getString("joinBlockedMOTD"));
-            }
-        } else {
-            formattedMessage = ChatColor.translateAlternateColorCodes('&', config.getString("waitLineMOTD"));
-            formattedMessage = formattedMessage.replaceAll("%remainPlayer%", waitingManager.get(address) + "");
+        if (waitingManager.get(address) > 0) {
+            event.setMotd(MessageUtil.format(config.getString("waitLineMOTD"), address));
+            return;
         }
-        event.setMotd(formattedMessage);
+
+        if (waitingManager.isCanJoin()) event.setMotd(MessageUtil.format(config.getString("enterMOTD"), address, true));
+        else event.setMotd(MessageUtil.format(config.getString("joinBlockedMOTD"), address));
     }
 }
