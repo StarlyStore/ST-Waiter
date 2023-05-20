@@ -59,11 +59,6 @@ public class WaitingManager {
         return waitingList.size();
     }
 
-    public boolean isFull() {
-        JavaPlugin plugin = WaiterMain.getInstance();
-        return plugin.getServer().getOnlinePlayers().size() >= plugin.getConfig().getInt("maxPlayer");
-    }
-
     public boolean validate(InetAddress inetAddress, UUID uuid) {
         if (!inetAddressMap.containsKey(inetAddress)) return false;
         return inetAddressMap.get(inetAddress).equals(uuid);
