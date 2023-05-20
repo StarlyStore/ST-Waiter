@@ -16,30 +16,28 @@ import java.net.InetAddress;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(PlayerLoginEvent event) {
         WaitingManager waitingManager = WaitingManager.getInstance();
         FileConfiguration config = WaiterMain.getInstance().getConfig();
         JavaPlugin plugin = WaiterMain.getInstance();
-        if (plugin.getServer().getOnlinePlayers().size() - 1 < plugin.getConfig().getInt("maxPlayer")) return; // 정원이 가득 찼는지 확인
+        if (plugin.getServer().getOnlinePlayers().size() < plugin.getConfig().getInt("maxPlayer"))
+            return; // 정원이 가득 찼는지 확인
 
-        InetAddress address = event.getPlayer().getAddress().getAddress();
+        InetAddress address = event.getAddress();
 
         if (!waitingManager.has(address)) {
             waitingManager.add(address, event.getPlayer().getUniqueId());
-            event.getPlayer().kickPlayer(MessageUtil.format(config.getString("kickMessage"),address));
-            event.setJoinMessage(null);
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessage"), address));
             return;
         }
 
         if (!waitingManager.validate(address, event.getPlayer().getUniqueId())) { // UUID 대조
-            event.getPlayer().kickPlayer("대기열에 등록된 UUID 와 달라 접속이 거부되었습니다.");
-            event.setJoinMessage(null);
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "대기열에 등록된 UUID 와 달라 접속이 거부되었습니다.");
             return;
         }
 
         if (waitingManager.get(address) != 0 || !waitingManager.isCanJoin()) { // 접속 가능여부 확인
-            event.getPlayer().kickPlayer(MessageUtil.format(config.getString("kickMessageWaiting"),address));
-            event.setJoinMessage(null);
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, MessageUtil.format(config.getString("kickMessageWaiting"), address));
             return;
         }
 

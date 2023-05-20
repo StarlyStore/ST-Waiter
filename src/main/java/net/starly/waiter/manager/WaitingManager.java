@@ -35,6 +35,7 @@ public class WaitingManager {
     private boolean canJoin = false;
 
     public Integer get(InetAddress inetAddress) {
+        System.out.println(waitingList);
         return waitingList.indexOf(inetAddress);
     }
 
@@ -50,7 +51,7 @@ public class WaitingManager {
 
     public void next() {
         inetAddressMap.remove(waitingList.get(0));
-        waitingList.remove(0);
+        waitingList.remove(waitingList.get(0));
         remainTime.setSeconds(configuration.getInt("enterTime"));
         canJoin = false;
     }
