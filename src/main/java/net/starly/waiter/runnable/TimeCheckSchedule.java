@@ -8,7 +8,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TimeCheckSchedule extends BukkitRunnable {
 
     private static TimeCheckSchedule instance;
-
     public static void start() {
         instance = new TimeCheckSchedule();
         instance.runTaskTimer(WaiterMain.getInstance(), 0L, 20L);
@@ -22,7 +21,7 @@ public class TimeCheckSchedule extends BukkitRunnable {
     @Override
     public void run() {
         WaitingManager waitingManager = WaitingManager.getInstance();
-        if (waitingManager.isFull()) return;
+        if (WaiterMain.getInstance().getServer().getOnlinePlayers().size() >= WaiterMain.getInstance().getConfig().getInt("maxPlayer")) return;
 
         if (waitingManager.getLength() <= 0) return;
 

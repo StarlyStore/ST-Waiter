@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import util.MessageUtil;
 
 import java.net.InetAddress;
@@ -18,7 +19,8 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         WaitingManager waitingManager = WaitingManager.getInstance();
         FileConfiguration config = WaiterMain.getInstance().getConfig();
-        if (!waitingManager.isFull()) return; // 정원이 가득 찼는지 확인
+        JavaPlugin plugin = WaiterMain.getInstance();
+        if (plugin.getServer().getOnlinePlayers().size() - 1 < plugin.getConfig().getInt("maxPlayer")) return; // 정원이 가득 찼는지 확인
 
         InetAddress address = event.getPlayer().getAddress().getAddress();
 
