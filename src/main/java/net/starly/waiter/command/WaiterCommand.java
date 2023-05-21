@@ -7,6 +7,7 @@ import net.starly.waiter.manager.InventoryManager;
 import net.starly.waiter.manager.WaitingManager;
 import net.starly.waiter.page.PaginationManager;
 import net.starly.waiter.util.ListTranslateUtil;
+import net.starly.waiter.util.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -59,7 +60,7 @@ public class WaiterCommand implements CommandExecutor {
                         return false;
                     }
 
-                    int page = args.length > 1 ? Integer.parseInt(args[0]) - 1 : 0;
+                    int page = args.length > 1 ? Integer.parseInt(args[1]) - 1 : 0;
                     int max = (page * 10) + 10;
 
                     if ((page * 10) > waitingManager.getLength()) page = 0;
@@ -70,7 +71,7 @@ public class WaiterCommand implements CommandExecutor {
                         if (i > waitingManager.getLength() - 1) break;
                         InetAddress address = waitingManager.getWaitingList().get(i);
                         UUID uuid = waitingManager.getInetAddressMap().get(address);
-                        String message = util.MessageUtil.formatExtra(config.getString("message.consoleListFormat"), address, uuid);
+                        String message = MessageUtil.formatExtra(config.getString("message.consoleListFormat"), address, uuid);
                         plugin.getLogger().log(Level.INFO, message);
                     }
                 } else sender.sendMessage(config.getString("errorMessage.wrongPlatform"));
@@ -92,7 +93,7 @@ public class WaiterCommand implements CommandExecutor {
 
                 UUID uuid = UUID.fromString(uuidString);
                 InetAddress address = waitingManager.getInetAddress(uuid);
-                String message = util.MessageUtil.formatExtra(config.getString("message.successRemovePlayerFromWaitList"), address, uuid);
+                String message = MessageUtil.formatExtra(config.getString("message.successRemovePlayerFromWaitList"), address, uuid);
                 if (waitingManager.get(address) <= 0) waitingManager.next();
                 else {
                     waitingManager.getWaitingList().remove(address);

@@ -1,4 +1,4 @@
-package util;
+package net.starly.waiter.util;
 
 import net.starly.waiter.WaiterMain;
 import net.starly.waiter.manager.WaitingManager;
@@ -9,10 +9,10 @@ import java.util.UUID;
 
 public class MessageUtil {
     public static String format(String string, InetAddress inetAddress) {
-        String result = ChatColor.translateAlternateColorCodes('&',string);
-        result = result.replace("%remainPlayer%", WaitingManager.getInstance().get(inetAddress) + "");
+        String result = "[ST-Waiter] " + ChatColor.translateAlternateColorCodes('&',string);
+        result = result.replace("%remainPlayer%", WaitingManager.getInstance().get(inetAddress).toString());
         result = result.replace("%ip%",inetAddress.getHostName());
-        result = result.replace("%priority%", WaitingManager.getInstance().get(inetAddress) + "");
+        result = result.replace("%priority%", WaitingManager.getInstance().get(inetAddress).toString());
         return result;
     }
 

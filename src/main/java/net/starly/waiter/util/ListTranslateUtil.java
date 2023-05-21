@@ -24,7 +24,7 @@ public class ListTranslateUtil {
                 OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(uuid);
                 ItemStack itemStack = PlayerSkullManager.getPlayerSkull(uuid);
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                itemMeta.setDisplayName(util.MessageUtil.formatExtra(plugin.getConfig().getString("gui.itemDisplayName"),inetAddress,uuid));
+                itemMeta.setDisplayName(MessageUtil.formatExtra(plugin.getConfig().getString("gui.itemDisplayName"),inetAddress,uuid));
                 itemMeta.setLore(translatePlaceHolder(plugin.getConfig().getStringList("gui.itemLore"),uuid,inetAddress));
                 itemStack.setItemMeta(itemMeta);
                 result.add(itemStack);
@@ -37,8 +37,8 @@ public class ListTranslateUtil {
         List<String> result = new ArrayList<>();
         for (String str : list) {
             str = ChatColor.translateAlternateColorCodes('&',str);
-            str = util.MessageUtil.format(str,inetAddress);
-            str = util.MessageUtil.formatExtra(str,inetAddress,uuid);
+            str = MessageUtil.format(str,inetAddress);
+            str = MessageUtil.formatExtra(str,inetAddress,uuid);
             result.add(str);
         }
         return result;
