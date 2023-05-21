@@ -74,7 +74,6 @@ public class WaiterCommand implements CommandExecutor {
                         String message = MessageUtil.formatExtra(config.getString("message.consoleListFormat"), address, uuid);
                         plugin.getLogger().log(Level.INFO, message);
                     }
-                    sender.sendMessage((page + 1) + " 페이지");
                     sender.sendMessage("/대기열 목록 [<페이지>]로 더 많은 페이지를 확인해보세요!");
                 } else sender.sendMessage(config.getString("errorMessage.wrongPlatform"));
                 break;
