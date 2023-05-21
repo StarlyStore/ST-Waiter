@@ -67,13 +67,15 @@ public class WaiterCommand implements CommandExecutor {
 
                     plugin.getLogger().log(Level.INFO, ChatColor.translateAlternateColorCodes('&', config.getString("message.consoleListTitle")));
 
-                    for (int i = (page * 10) - 1; i < max; i++) {
+                    for (int i = page * 10; i < max; i++) {
                         if (i > waitingManager.getLength() - 1) break;
                         InetAddress address = waitingManager.getWaitingList().get(i);
                         UUID uuid = waitingManager.getInetAddressMap().get(address);
                         String message = MessageUtil.formatExtra(config.getString("message.consoleListFormat"), address, uuid);
                         plugin.getLogger().log(Level.INFO, message);
                     }
+                    sender.sendMessage((page + 1) + " 페이지");
+                    sender.sendMessage("/대기열 목록 [<페이지>]로 더 많은 페이지를 확인해보세요!");
                 } else sender.sendMessage(config.getString("errorMessage.wrongPlatform"));
                 break;
             }
