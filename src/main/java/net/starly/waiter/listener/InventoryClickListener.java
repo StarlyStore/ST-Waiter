@@ -11,7 +11,7 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         InventoryManager manager = InventoryManager.getInstance();
-        Player player = WaiterMain.getInstance().getServer().getPlayer(event.getWhoClicked().getUniqueId());
+        Player player = (Player) event.getWhoClicked();
         if (!manager.has(player)) return;
         event.setCancelled(true);
     }

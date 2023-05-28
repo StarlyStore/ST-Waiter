@@ -23,11 +23,11 @@ public class ServerListPingListener implements Listener {
         if (!waitingManager.has(address)) return;
 
         if (waitingManager.get(address) > 0) {
-            event.setMotd(MessageUtil.format(config.getString("motd.waitLineMOTD"), address));
+            event.setMotd(MessageUtil.formatWithoutPrefix(config.getString("motd.waitLineMOTD"), address));
             return;
         }
 
-        if (waitingManager.isCanJoin()) event.setMotd(MessageUtil.format(config.getString("motd.enterMOTD"), address, true));
-        else event.setMotd(MessageUtil.format(config.getString("motd.joinBlockedMOTD"), address));
+        if (waitingManager.isCanJoin()) event.setMotd(MessageUtil.formatWithoutPrefix(config.getString("motd.enterMOTD"), address, true));
+        else event.setMotd(MessageUtil.formatWithoutPrefix(config.getString("motd.joinBlockedMOTD"), address));
     }
 }

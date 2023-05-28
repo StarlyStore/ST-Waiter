@@ -20,6 +20,9 @@ public class TimeCheckSchedule extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (this.isCancelled()) return;
+
         WaitingManager waitingManager = WaitingManager.getInstance();
         if (WaiterMain.getInstance().getServer().getOnlinePlayers().size() >= WaiterMain.getInstance().getConfig().getInt("maxPlayer")) return;
 

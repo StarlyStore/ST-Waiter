@@ -6,6 +6,7 @@ import net.starly.waiter.converter.UUIDConverter;
 import net.starly.waiter.manager.InventoryManager;
 import net.starly.waiter.manager.WaitingManager;
 import net.starly.waiter.page.PaginationManager;
+import net.starly.waiter.runnable.TimeCheckSchedule;
 import net.starly.waiter.util.ListTranslateUtil;
 import net.starly.waiter.util.MessageUtil;
 import org.bukkit.ChatColor;
@@ -34,6 +35,7 @@ public class WaiterCommand implements CommandExecutor {
         JavaPlugin plugin = WaiterMain.getInstance();
         FileConfiguration config = plugin.getConfig();
         WaitingManager waitingManager = WaitingManager.getInstance();
+        String prefix = WaiterMain.getInstance().getConfig().getString("message.prefix");
         if (args.length == 0) {
             sender.sendMessage(plugin.getName() + " version " + plugin.getDescription().getVersion());
             return true;
@@ -45,7 +47,7 @@ public class WaiterCommand implements CommandExecutor {
                 if (sender instanceof Player) {
 
                     if (waitingManager.getLength() <= 0) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',config.getString("errorMessage.emptyWaitLine")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + " " + config.getString("errorMessage.emptyWaitLine")));
                         return false;
                     }
 
@@ -56,7 +58,7 @@ public class WaiterCommand implements CommandExecutor {
                 } else if (sender instanceof ConsoleCommandSender) {
 
                     if (waitingManager.getLength() <= 0) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',config.getString("errorMessage.emptyWaitLine")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + " " + config.getString("errorMessage.emptyWaitLine")));
                         return false;
                     }
 
@@ -65,7 +67,7 @@ public class WaiterCommand implements CommandExecutor {
 
                     if ((page * 10) > waitingManager.getLength()) page = 0;
 
-                    plugin.getLogger().log(Level.INFO, ChatColor.translateAlternateColorCodes('&', config.getString("message.consoleListTitle")));
+                    plugin.getLogger().log(Level.INFO, ChatColor.translateAlternateColorCodes('&', prefix + " " + config.getString("message.consoleListTitle")));
 
                     for (int i = page * 10; i < max; i++) {
                         if (i > waitingManager.getLength() - 1) break;
@@ -99,8 +101,16 @@ public class WaiterCommand implements CommandExecutor {
                 else {
                     waitingManager.getWaitingList().remove(address);
                     waitingManager.getInetAddressMap().remove(address);
+                    waitingManager.getNicknameMap().remove(uuid);
                 }
                 sender.sendMessage(message);
+                break;
+            }
+
+            case "리로드": {
+                plugin.reloadConfig();
+
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + " " + config.getString("message.reloadComplete")));
                 break;
             }
 

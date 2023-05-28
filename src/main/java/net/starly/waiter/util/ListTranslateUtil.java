@@ -5,9 +5,11 @@ import net.starly.core.jb.util.PlayerSkullManager;
 import net.starly.waiter.WaiterMain;
 import net.starly.waiter.manager.WaitingManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.InetAddress;
@@ -21,10 +23,17 @@ public class ListTranslateUtil {
         List<ItemStack> result = new ArrayList<>();
         JavaPlugin plugin = WaiterMain.getInstance();
         map.forEach((inetAddress, uuid) -> {
-                OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(uuid);
+                /*ItemStack itemStack;
+                try {
+                   itemStack = new ItemStack(Material.SKULL_ITEM);
+                } catch (NoSuchFieldError error) {
+                    itemStack = new ItemStack(Material.valueOf("PLAYER_HEAD"));
+                }
+                SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
+                itemMeta.setOwningPlayer(WaiterMain.getInstance().getServer().getOfflinePlayer(uuid));*/
                 ItemStack itemStack = PlayerSkullManager.getPlayerSkull(uuid);
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                itemMeta.setDisplayName(MessageUtil.formatExtra(plugin.getConfig().getString("gui.itemDisplayName"),inetAddress,uuid));
+                itemMeta.setDisplayName(MessageUtil.formatExtraWithoutPrefix(plugin.getConfig().getString("gui.itemDisplayName"),inetAddress,uuid));
                 itemMeta.setLore(translatePlaceHolder(plugin.getConfig().getStringList("gui.itemLore"),uuid,inetAddress));
                 itemStack.setItemMeta(itemMeta);
                 result.add(itemStack);
@@ -36,9 +45,7 @@ public class ListTranslateUtil {
     public static List<String> translatePlaceHolder(List<String> list, UUID uuid, InetAddress inetAddress) {
         List<String> result = new ArrayList<>();
         for (String str : list) {
-            str = ChatColor.translateAlternateColorCodes('&',str);
-            str = MessageUtil.format(str,inetAddress);
-            str = MessageUtil.formatExtra(str,inetAddress,uuid);
+            str = MessageUtil.formatExtraWithoutPrefix(str,inetAddress,uuid);
             result.add(str);
         }
         return result;

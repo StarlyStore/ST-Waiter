@@ -11,6 +11,9 @@ motd:
   enterMOTD: "&c&l플레이어님의 순서입니다. %remainTime%초 안에 접속하지 않으면 다음 플레이어에게 차례가 넘어갑니다!"
 
 message:
+  # 접두사
+  prefix: "[ST-Waiter]"
+
   # 대기열 목록 제목
   consoleListTitle: "=== 대기열 목록 ==="
 
@@ -21,7 +24,10 @@ message:
   consoleListFooter: "/대기열 목록 [<페이지>]로 더 많은 페이지를 확인해보세요!"
 
   # 대기열에서 플레이어를 삭제하는데 성공 했을 때
-  successRemovePlayerFromWaitList: "&b성공적으로 %ip%(%nickname%|%uuid%)님을 대기열에서 삭제했습니다!"
+  successRemovePlayerFromWaitList: "&b성공적으로 %ip%(%nickname%)님을 대기열에서 삭제했습니다!"
+
+  # 리로드 시 메시지
+  reloadCompleteM: "&a리로드가 완료되었습니다."
 
   # 도움말 메시지
   helpMessage:

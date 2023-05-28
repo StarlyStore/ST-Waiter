@@ -19,6 +19,7 @@ public class WaiterTabCompleter implements TabCompleter {
         if (args.length == 1) {
             result.add("목록");
             result.add("삭제");
+            result.add("리로드");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("삭제")) {
             for (UUID uuid : WaitingManager.getInstance().getInetAddressMap().values())
                 result.add(WaiterMain.getInstance().getServer().getOfflinePlayer(uuid).getName());

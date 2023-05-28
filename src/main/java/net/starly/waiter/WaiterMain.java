@@ -5,6 +5,7 @@ import net.starly.core.bstats.Metrics;
 import net.starly.waiter.command.WaiterCommand;
 import net.starly.waiter.command.tabCompleter.WaiterTabCompleter;
 import net.starly.waiter.listener.InventoryClickListener;
+import net.starly.waiter.listener.InventoryCloseListener;
 import net.starly.waiter.listener.PlayerJoinListener;
 import net.starly.waiter.listener.ServerListPingListener;
 import net.starly.waiter.runnable.TimeCheckSchedule;
@@ -42,8 +43,6 @@ public final class WaiterMain extends JavaPlugin {
         /* CONFIG
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         saveDefaultConfig();
-        reloadConfig();
-
         /* COMMAND
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         getCommand("대기열").setExecutor(new WaiterCommand());
@@ -54,6 +53,7 @@ public final class WaiterMain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new ServerListPingListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 
     private boolean isPluginEnabled(String name) {

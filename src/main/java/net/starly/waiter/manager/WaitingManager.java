@@ -7,6 +7,7 @@ import net.starly.core.data.Time;
 import net.starly.waiter.WaiterMain;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.InetAddress;
@@ -32,6 +33,9 @@ public class WaitingManager {
     private final HashMap<InetAddress, UUID> inetAddressMap = new HashMap<>();
 
     @Getter
+    private final HashMap<UUID, String> nicknameMap = new HashMap<>();
+
+    @Getter
     private final Time remainTime = new Time(configuration.getInt("enterTime"));
 
     @Getter
@@ -43,10 +47,11 @@ public class WaitingManager {
         return waitingList.indexOf(inetAddress);
     }
 
-    public void add(InetAddress inetAddress, UUID uuid) {
+    public void add(InetAddress inetAddress, Player player) {
         if (waitingList.contains(inetAddress)) return;
         waitingList.add(inetAddress);
-        inetAddressMap.put(inetAddress, uuid);
+        inetAddressMap.put(inetAddress, player.getUniqueId());
+        nicknameMap.put(player.getUniqueId(), player.getName());
     }
 
     public boolean has(InetAddress inetAddress) {
@@ -54,8 +59,10 @@ public class WaitingManager {
     }
 
     public void next() {
-        inetAddressMap.remove(waitingList.get(0));
-        waitingList.remove(waitingList.get(0));
+        InetAddress address = waitingList.get(0);
+        nicknameMap.remove(inetAddressMap.get(address));
+        inetAddressMap.remove(address);
+        waitingList.remove(address);
         remainTime.setSeconds(configuration.getInt("enterTime"));
         canJoin = false;
     }
@@ -67,6 +74,10 @@ public class WaitingManager {
             }
         }
         return null;
+    }
+
+    public String getNickname(UUID uuid) {
+        return nicknameMap.get(uuid);
     }
 
     public int getLength() {
