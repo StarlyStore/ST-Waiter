@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaginationManager {
+
     @Getter
-    private final List<PageData> pages;
+    private final List<WaiterPage> pages;
     @Getter private int currentPage;
 
     public PaginationManager(List<ItemStack> items) {
@@ -24,17 +25,17 @@ public class PaginationManager {
         if (currentPage > 1) currentPage--;
     }
 
-    public PageData getCurrentPageData() { return pages.get(currentPage - 1); }
+    public WaiterPage getCurrentPageData() { return pages.get(currentPage - 1); }
 
-    public List<PageData> paginateItems(List<ItemStack> items) {
-        List<PageData> pages = new ArrayList<>();
+    public List<WaiterPage> paginateItems(List<ItemStack> items) {
+        List<WaiterPage> pages = new ArrayList<>();
         int itemCount = items.size();
         int pageCount = (int) Math.ceil((double) itemCount / 45);
         for (int i = 0; i < pageCount; i++) {
             int start = i * 45;
             int end = Math.min(start + 45, itemCount);
             List<ItemStack> pageItems = items.subList(start, end);
-            pages.add(new PageData(i + 1, pageItems));
+            pages.add(new WaiterPage(i + 1, pageItems));
         }
         return pages;
     }

@@ -1,8 +1,7 @@
 package net.starly.waiter.runnable;
 
 import net.starly.waiter.WaiterMain;
-import net.starly.waiter.manager.WaitingManager;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.starly.waiter.manager.WaiterManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class TimeCheckSchedule extends BukkitRunnable {
@@ -23,14 +22,14 @@ public class TimeCheckSchedule extends BukkitRunnable {
 
         if (this.isCancelled()) return;
 
-        WaitingManager waitingManager = WaitingManager.getInstance();
+        WaiterManager waiterManager = WaiterManager.getInstance();
         if (WaiterMain.getInstance().getServer().getOnlinePlayers().size() >= WaiterMain.getInstance().getConfig().getInt("maxPlayer")) return;
 
-        if (waitingManager.getLength() <= 0) return;
+        if (waiterManager.getLength() <= 0) return;
 
-        if (!waitingManager.isCanJoin()) waitingManager.setCanJoin(true);
+        if (!waiterManager.isCanJoin()) waiterManager.setCanJoin(true);
 
-        if (waitingManager.getRemainTime().getSeconds() == 0) waitingManager.next();
-        else waitingManager.getRemainTime().subtract(1);
+        if (waiterManager.getRemainTime().getSeconds() == 0) waiterManager.next();
+        else waiterManager.getRemainTime().subtract(1);
     }
 }

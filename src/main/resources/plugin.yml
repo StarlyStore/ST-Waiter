@@ -14,12 +14,17 @@ api-version: 1.13
 commands:
   대기열:
     description: ST-Waiter main command
-    permission: starly.st-waiter.admin
 
 permissions:
-  starly.st-waiter.bypass:
+  starly.waiter.bypass:
     description: bypass waiting line
     default: op
-  starly.st-waiter.admin:
-    description: admin command permission
+  starly.waiter.list:
+    description: list command permission
+    default: op
+  starly.waiter.delete:
+    description: delete command permission
+    default: op
+  starly.waiter.reload:
+    description: reload command permission
     default: op

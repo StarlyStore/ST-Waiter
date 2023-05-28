@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PageData {
+public class WaiterPage {
     private final int pageNum;
     private final List<ItemStack> items;
 }

@@ -8,7 +8,6 @@ import net.starly.waiter.WaiterMain;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -16,11 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class WaitingManager {
-    private static WaitingManager instance;
+public class WaiterManager {
+    private static WaiterManager instance;
 
-    public static WaitingManager getInstance() {
-        if (instance == null) instance = new WaitingManager();
+    public static WaiterManager getInstance() {
+        if (instance == null) instance = new WaiterManager();
         return instance;
     }
 

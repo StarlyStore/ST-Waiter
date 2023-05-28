@@ -1,7 +1,7 @@
 package net.starly.waiter.manager;
 
 import lombok.Getter;
-import net.starly.waiter.page.PageData;
+import net.starly.waiter.page.WaiterPage;
 import net.starly.waiter.page.PaginationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,8 +25,8 @@ public class InventoryManager {
 
     public void openInventory(PaginationManager paginationManager, Player player) {
         Inventory inventory = Bukkit.createInventory(null, 45, "대기열 목록");
-        PageData pageData = paginationManager.getCurrentPageData();
-        for (ItemStack itemStack : pageData.getItems()) {
+        WaiterPage waiterPage = paginationManager.getCurrentPageData();
+        for (ItemStack itemStack : waiterPage.getItems()) {
             inventory.addItem(itemStack);
         }
         player.openInventory(inventory);

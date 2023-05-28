@@ -3,7 +3,7 @@ package net.starly.waiter;
 import lombok.Getter;
 import net.starly.core.bstats.Metrics;
 import net.starly.waiter.command.WaiterCommand;
-import net.starly.waiter.command.tabCompleter.WaiterTabCompleter;
+import net.starly.waiter.command.tabcomplete.WaiterTabComplete;
 import net.starly.waiter.listener.InventoryClickListener;
 import net.starly.waiter.listener.InventoryCloseListener;
 import net.starly.waiter.listener.PlayerJoinListener;
@@ -36,7 +36,7 @@ public final class WaiterMain extends JavaPlugin {
 
         /* SETUP
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        new Metrics(this, 12345); // TODO: 수정
+        new Metrics(this, 18591);
         TimeCheckSchedule.start();
 
 
@@ -46,7 +46,7 @@ public final class WaiterMain extends JavaPlugin {
         /* COMMAND
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         getCommand("대기열").setExecutor(new WaiterCommand());
-        getCommand("대기열").setTabCompleter(new WaiterTabCompleter());
+        getCommand("대기열").setTabCompleter(new WaiterTabComplete());
 
         /* LISTENER
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
